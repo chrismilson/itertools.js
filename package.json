@@ -20,6 +20,12 @@
     "build": "rollup -c",
     "test": "jest"
   },
+  "jest": {
+    "preset": "ts-jest",
+    "transform": {
+      "^.+\\.(ts|tsx)$": "ts-jest"
+    }
+  },
   "files": [
     "dist/"
   ],
