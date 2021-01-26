@@ -1,4 +1,4 @@
-import { range } from '../range'
+import { range } from '..'
 
 describe('end only', () => {
   it('Should start counting from zero', () => {

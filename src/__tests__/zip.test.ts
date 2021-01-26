@@ -1,4 +1,4 @@
-import { zip, zipLongest } from '../zip'
+import { zip, zipLongest } from '..'
 
 describe('zip', () => {
   it('Should iterate two iterables in parallel', () => {

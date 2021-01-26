@@ -1,4 +1,4 @@
-import { combinations, combinationsWithReplacement } from '../combinations'
+import { combinations, combinationsWithReplacement } from '..'
 
 describe('combinations', () => {
   it('Should yield combinations in order', () => {
