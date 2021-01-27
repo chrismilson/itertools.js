@@ -403,6 +403,19 @@ export function* filter<T>(
 }
 
 /**
+ * An iterator that filters elements from iterable returning only those for
+ * which the predicate is False.
+ *
+ * Defaults to filtering out values that are truthy.
+ */
+export function* filterFalse<T>(
+  iterable: Iterable<T>,
+  predicate: (value: T) => boolean = Boolean
+): Generator<T> {
+  yield* filter(iterable, (v) => !predicate(v))
+}
+
+/**
  * Returns a generator over mapped elements from a given iterable based on a
  * given modifying function.
  *
