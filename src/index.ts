@@ -819,6 +819,27 @@ export function reduce_<T>(
 }
 
 /**
+ * An iterator that returns a target value over and over again. Runs
+ * indefinitely unless the times argument is specified.
+ *
+ * Used as argument to map() for invariant parameters to the called function.
+ * Also used with zip() to create an invariant part of a tuple record.
+ *
+ * @example
+ * repeat(5, 3) // 5 5 5
+ * map(Math.pow, [1, 2, 3, 4, 5], repeat(2)) // 1 4 9 16 25
+ * zip(repeat(1), [1, 2, 3]) // [1, 1] [1, 2] [1, 3]
+ *
+ * @param value The value to yield
+ * @param times The number of times to yield the value. Defaults to Infinity.
+ */
+export function* repeat<T>(value: T, times = Infinity): Generator<T> {
+  for (; times > 0; times--) {
+    yield value
+  }
+}
+
+/**
  * Iterates over the values of an iterator while they satisfy a predicate.
  *
  * Defaults to the truthiness of values as the predicate.
