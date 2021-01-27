@@ -344,10 +344,12 @@ export function* cycle<T>(iterable: Iterable<T>): Generator<T> {
  * predicate is true; afterwards, returns every element. Note, the iterator does
  * not produce any output until the predicate first becomes false, so it may
  * have a lengthy start-up time.
+ *
+ * Defaults to the truthyness of values for the predicate.
  */
 export function* dropWhile<T>(
   iterable: Iterable<T>,
-  predicate: (value: T) => boolean
+  predicate: (value: T) => boolean = Boolean
 ): Generator<T> {
   const iterator = iterable[Symbol.iterator]()
   let value: T
