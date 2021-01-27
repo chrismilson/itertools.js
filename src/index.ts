@@ -294,17 +294,19 @@ export function contains<T>(haystack: Iterable<T>, needle: T): boolean {
  *
  * Be careful to avoid calculating the entire sequence.
  *
+ * Defaults to `start = 0` and `step = 1`.
+ *
  * @example
  * // good
- * const it = countFrom(5, 2)
+ * const it = count(5, 2)
  * it.next() // 5
  * it.next() // 7
  * it.next() // 9
  *
  * //bad
- * [...countFrom(5, 3)] // Infinite loop!
+ * [...count(5, 3)] // Infinite loop!
  */
-export function* count(start: number, step: number): Generator<number> {
+export function* count(start = 0, step = 1): Generator<number> {
   for (let i = start; ; i += step) {
     yield i
   }
@@ -373,7 +375,7 @@ export function* enumerate<T>(
   iterable: Iterable<T>,
   start = 0
 ): Generator<[number, T]> {
-  yield* zip(count(start, 1), iterable)
+  yield* zip(count(start), iterable)
 }
 
 /**
