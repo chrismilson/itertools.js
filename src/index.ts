@@ -890,6 +890,57 @@ export function* takeWhile<T>(
 }
 
 /**
+ * Return n independent iterators from a single iterable.
+ *
+ * The `tee` function may require significant auxiliary storage (depending on
+ * how much temporary data needs to be stored). In general, if one iterator uses
+ * most or all of the data before another iterator starts, it is faster to
+ * spread the iterator to an array (with `[...iterator]`) instead of using
+ * `tee()`.
+ */
+export function tee<T, N extends number>(
+  iterable: Iterable<T>,
+  n: N = 2 as N
+): Tuple<Generator<T>, N> {
+  /** The saved values */
+  const saved: T[] = []
+  /** The number of iterators that have not iterated the value yet. */
+  const count: number[] = []
+  /** The index of the last polled value from the iterable */
+  let last = -1
+  let finished = 0
+
+  const it = iterable[Symbol.iterator]()
+
+  const generator = function* (): Generator<T> {
+    let i = 0
+    for (;;) {
+      // make sure the next value to yield exists.
+      while (i > last) {
+        // We need to extend the saved values
+        const { done, value } = it.next()
+        if (done) {
+          return
+        }
+        saved.push(value as T)
+        count.push(n)
+        last += 1
+      }
+      yield saved[i - finished]
+      count[i] -= 1
+      if (count[i] === 0) {
+        saved.shift()
+        count.shift()
+        finished += 1
+      }
+      i += 1
+    }
+  }
+
+  return Array(n).fill(0).map(generator) as Tuple<Generator<T>, N>
+}
+
+/**
  * Iterates over multiple iterators in parallel. Stops as soon as any of the
  * included iterators stop.
  *
