@@ -840,6 +840,39 @@ export function* repeat<T>(value: T, times = Infinity): Generator<T> {
 }
 
 /**
+ * An iterator that computes the map function using arguments obtained from the
+ * iterable.
+ *
+ * Used instead of `map()` when argument parameters are already grouped in
+ * tuples from a single iterable (the data has been “pre-zipped”).
+ *
+ * The difference between `map()` and `spreadMap()` parallels the distinction
+ * between `function(a, b)` and `function(...c)`.
+ *
+ * *The corresponding function in python is called `starmap()`. I did this
+ * because the spread operation in javascript and the star operation in python
+ * are analogous.*
+ *
+ * @example
+ * spreadmap(Math.pow, zip([1, 2, 3, 4], repeat(2))) // 1 4 9 16
+ *
+ * @see zip
+ * @see repeat
+ * @see map
+ *
+ * @param mapper
+ * @param iterable
+ */
+export function* spreadMap<T extends unknown[], M>(
+  mapper: (...values: T) => M,
+  iterable: Iterable<T>
+): Generator<M> {
+  for (const values of iterable) {
+    yield mapper(...values)
+  }
+}
+
+/**
  * Iterates over the values of an iterator while they satisfy a predicate.
  *
  * Defaults to the truthiness of values as the predicate.
