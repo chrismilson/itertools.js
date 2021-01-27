@@ -416,6 +416,113 @@ export function* filterFalse<T>(
 }
 
 /**
+ * An iterator that returns unique values and groups of that value from the
+ * iterable. Generally, the iterable needs to already be sorted.
+ *
+ * The operation is similar to the `uniq` filter in Unix. It generates a break
+ * or new group every time the value changes (which is why it is usually
+ * necessary to have sorted the data beforehand). This differs from SQL’s `GROUP
+ * BY` which aggregates elements regardless of their input order.
+ * 
+ * The group iterator is not saved as the iterator progresses; please pay
+ * attention to the second example.
+ * 
+ * @example
+ * const values = [0, 0, 1, 1]
+ * for (const [k, g] of groupBy(values)) {
+ *    console.log(`key = ${k}`)        // 0      1
+ *    console.log(`group = ${[...g]}`) // [0, 0] [1, 1]
+ * }
+ *
+ * const groups = [...groupBy(values)].map(([k, g]) => [...g]) // [[], []]
+ */
+export function groupBy<T>(iterable: Iterable<T>): Generator<[T, Iterable<T>]>
+/**
+ * An iterator that returns consecutive keys and groups from the iterable.
+ * Generally, the iterable needs to already be sorted on the same key function.
+ *
+ * The operation is similar to the `uniq` filter in Unix. It generates a break
+ * or new group every time the value of the key function changes (which is why
+ * it is usually necessary to have sorted the data by the key function
+ * beforehand). This differs from SQL’s `GROUP BY` which aggregates common
+ * elements regardless of their input order.
+ *
+ * The group iterator is not saved as the iterator progresses; please pay
+ * attention to the second example.
+ *
+ * @example
+ * const values = [0, 1, 2, 3, 1, 4, 5]
+ * const keyFunc = v => Math.floor(v / 2)
+ * for (const [k, g] of groupBy(values, keyFunc)) {
+ *    console.log(`key = ${k}`)        // 0      1      0   2
+ *    console.log(`group = ${[...g]}`) // [0, 1] [2, 3] [1] [4, 5]
+ * }
+ *
+ * const groups = [...groupBy(values, keyFunc)].map(([k, g]) => [...g]) // [[], [], [], []]
+ *
+ * @param keyFunc A function computing a key value for each element.
+ */
+export function groupBy<T, K>(
+  iterable: Iterable<T>,
+  keyFunc: (item: T) => K
+): Generator<[K, Iterable<T>]>
+export function* groupBy<T, K>(
+  iterable: Iterable<T>,
+  keyFunc?: (v: T) => K
+): Generator<[K, Iterable<T>]> {
+  if (keyFunc === undefined) {
+    // If the key value is to be a different type to the iterated values, then
+    // a different overloaded method will be used.
+    keyFunc = (v: T) => (v as unknown) as K
+  }
+
+  const it = iterable[Symbol.iterator]()
+
+  // We need a dummy value to initialise the keys and values that will not be
+  // equal to anything in the iterable.
+  // When we start iterating, all three of these variables will be defined
+  // before we yield them.
+  let currKey: K = ({} as unknown) as K
+  let targetKey: K = currKey
+  let currValue: T = ({} as unknown) as T
+
+  // A dummy object to notify the grouper when the next group has started.
+  let id: Record<string, never> = {}
+
+  const grouper = function* (
+    targetId: Record<string, never>,
+    keyFunc: (v: T) => K
+  ) {
+    while (id === targetId && currKey === targetKey) {
+      yield currValue
+      if (!({ value: currValue } = it.next()).done) {
+        currKey = keyFunc(currValue)
+      } else {
+        // the iterator has finished
+        return
+      }
+    }
+  }
+
+  while (true) {
+    id = {}
+    // Skip over the values with the same key.
+    while (currKey === targetKey) {
+      if (!({ value: currValue } = it.next()).done) {
+        currKey = keyFunc(currValue)
+      } else {
+        // The iterator has finished.
+        return
+      }
+    }
+    // Update the key to the next value
+    targetKey = currKey
+    // Yield the current key and an iterator over the values with the same key.
+    yield [currKey, grouper(id, keyFunc)]
+  }
+}
+
+/**
  * Returns a generator over mapped elements from a given iterable based on a
  * given modifying function.
  *
