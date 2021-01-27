@@ -275,15 +275,15 @@ export function* compress<T, S>(
 }
 
 /**
- * Returns true when any of the items in the iterable are equal to the target
- * object.
+ * Returns true when any of the items in the iterable are equal (===) to the
+ * target object.
  *
  * @example
  *
- * contains([], 'whatever') // => false
- * contains([3], 42) // => false
- * contains([3], 3) // => true
- * contains([0, 1, 2], 2) // => true
+ *contains([], 'whatever') // => false
+ *contains([3], 42) // => false
+ *contains([3], 3) // => true
+ *contains([{}, {}], {}) // => false, since comparison is done with ===
  */
 export function contains<T>(haystack: Iterable<T>, needle: T): boolean {
   return any(haystack, (value) => value === needle)
