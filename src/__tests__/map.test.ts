@@ -24,7 +24,7 @@ describe('map', () => {
   it('Should apply the map to multiple arguments', () => {
     const a = [1, 2, 3, 4]
     const b = [2, 2, 2, 2]
-    const mapper = (x: number, y: number): number => Math.pow(x, y)
+    const mapper = Math.pow
 
     expect([...map(mapper, a, b)]).toMatchObject([1, 4, 9, 16])
   })
