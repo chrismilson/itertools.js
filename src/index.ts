@@ -382,13 +382,16 @@ export function* enumerate<T>(
  * Returns a generator that filters elements from a given iterable based on a
  * predicate.
  *
+ * The predicate defaults to the boolean constructor; falsy values will be
+ * filtered.
+ *
  * @example
  * [...filter([0, 1, 2, 3, 4], n => n % 2 === 0)] // [0, 2, 4]
  * [...filter('Hello World!', c => c.match(/[A-Z]/) !== null)] // ['H', 'W']
  */
 export function* filter<T>(
   iterable: Iterable<T>,
-  predicate: (value: T) => boolean
+  predicate: (value: T) => boolean = Boolean
 ): Generator<T> {
   for (const item of iterable) {
     if (predicate(item)) {
