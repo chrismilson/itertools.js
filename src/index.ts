@@ -533,10 +533,12 @@ export function reduce_<T>(
 
 /**
  * Iterates over the values of an iterator while they satisfy a predicate.
+ *
+ * Defaults to the truthiness of values as the predicate.
  */
 export function* takeWhile<T>(
   iterable: Iterable<T>,
-  predicate: (value: T) => boolean
+  predicate: (value: T) => boolean = Boolean
 ): Generator<T> {
   for (const item of iterable) {
     if (!predicate(item)) {
