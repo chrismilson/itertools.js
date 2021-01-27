@@ -423,10 +423,10 @@ export function* filterFalse<T>(
  * or new group every time the value changes (which is why it is usually
  * necessary to have sorted the data beforehand). This differs from SQL’s `GROUP
  * BY` which aggregates elements regardless of their input order.
- * 
+ *
  * The group iterator is not saved as the iterator progresses; please pay
  * attention to the second example.
- * 
+ *
  * @example
  * const values = [0, 0, 1, 1]
  * for (const [k, g] of groupBy(values)) {
@@ -519,6 +519,80 @@ export function* groupBy<T, K>(
     targetKey = currKey
     // Yield the current key and an iterator over the values with the same key.
     yield [currKey, grouper(id, keyFunc)]
+  }
+}
+
+/**
+ * An iterator that yields k elements from the iterable.
+ */
+export function islice<T>(iterable: Iterable<T>, k: number): Generator<T>
+/**
+ * An iterator that yields selected elements from the iterable. If `start` is
+ * non-zero, then elements from the iterable are skipped until start is reached.
+ * Afterward, elements are returned consecutively unless step is set higher than
+ * one which results in items being skipped. Unlike regular slicing, islice()
+ * does not support negative values for start, stop, or step.
+ */
+export function islice<T>(
+  iterable: Iterable<T>,
+  start: number,
+  stop?: number,
+  step?: number
+): Generator<T>
+export function* islice<T>(
+  iterable: Iterable<T>,
+  startOrEnd: number,
+  endValue?: number,
+  stepValue?: number
+): Generator<T> {
+  const enumerated = enumerate(iterable)
+  let start: number
+  let end: number
+  let step: number
+
+  if (endValue === undefined) {
+    if (stepValue === undefined) {
+      if (startOrEnd < 0) {
+        throw new TypeError('k param must be non-negative or undefined')
+      }
+      start = 0
+      end = startOrEnd
+      step = 1
+    } else {
+      start = startOrEnd
+      end = Infinity
+      step = stepValue
+    }
+  } else {
+    start = startOrEnd
+    end = endValue
+    step = stepValue ?? 1
+  }
+  if (start < 0) {
+    throw new TypeError('start param must be non-negative or undefined')
+  }
+  if (end < 0) {
+    throw new TypeError('end param must be non-negative or undefined')
+  }
+  if (step <= 0) {
+    throw new TypeError('step param must be positive or undefined')
+  }
+
+  for (const select of takeWhile(count(start, step), (v) => v < end)) {
+    for (;;) {
+      const { done, value } = enumerated.next()
+      if (done) {
+        // The iterator is done and we will not yield any more.
+        return
+      }
+      // Since we are not done, the value property will be of the correct type.
+      const [i, val] = value as [number, T]
+      if (i === select) {
+        // We found the next value, yield it and move on to the next value.
+        yield val
+        break
+      }
+    }
   }
 }
 
