@@ -672,6 +672,38 @@ export function* permutations<T, N extends number = number>(
 }
 
 /**
+ * An iterator over the cartesian product of the input iterables.
+ */
+export function* product<T extends unknown[]>(
+  ...toProduct: Iterableify<T>
+): Generator<T> {
+  const saved = toProduct.map((iterable) => [...iterable]) as {
+    [P in keyof T]: T[P][]
+  }
+  // If any incuded iterator has length zero, the product is empty
+  if (any(saved, (iter) => iter.length == 0)) {
+    return
+  }
+  const n = saved.length
+
+  /** The current indicies into each saved iterator. */
+  const indicies = Array(saved.length).fill(0)
+
+  let found = n > 0
+  while (found) {
+    yield [...zip(indicies, saved)].map(([idx, iter]) => iter[idx]) as T
+    found = false
+    for (const i of range(n - 1, -1, -1)) {
+      indicies[i] = (indicies[i] + 1) % saved[i].length
+      if (indicies[i] !== 0) {
+        found = true
+        break
+      }
+    }
+  }
+}
+
+/**
  * Iterates over the values 0 <= i < end.
  */
 export function range(end: number): Generator<number>

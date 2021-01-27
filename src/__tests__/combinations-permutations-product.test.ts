@@ -1,4 +1,9 @@
-import { combinations, combinationsWithReplacement, permutations } from '..'
+import {
+  combinations,
+  combinationsWithReplacement,
+  permutations,
+  product,
+} from '..'
 
 describe('combinations', () => {
   it('Should yield combinations in order', () => {
@@ -47,5 +52,20 @@ describe('permutations', () => {
     const factorial = (v: number): number => (v == 0 ? 1 : v * factorial(v - 1))
 
     expect([...permutations(orig)].length).toBe(factorial(orig.length))
+  })
+})
+
+describe('product', () => {
+  it('Should yield products in order', () => {
+    const a = [1, 2, 3]
+    const prod = [...product(a, a, a)].map((p) => p.join(''))
+
+    expect(prod).toMatchObject([...prod].sort())
+  })
+
+  it('Should yield the correct number of products', () => {
+    const a = [1, 2, 3]
+
+    expect([...product(a, a, a)].length).toBe(Math.pow(a.length, 3))
   })
 })
