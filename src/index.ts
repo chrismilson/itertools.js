@@ -614,6 +614,64 @@ export function* map<T, M>(
 }
 
 /**
+ * An iterator over the r-length permutations of the iterable.
+ *
+ * If r is undefined, then it defaults to the length of the iterable and all
+ * possible full-length permutations are generated.
+ *
+ * The permutation tuples are emitted in lexicographic ordering according to the
+ * order of the input iterable. So, if the input iterable is sorted, the
+ * combination tuples will be produced in sorted order.
+ *
+ * Elements are treated as unique based on their position, not on their value.
+ * So if the input elements are unique, there will be no repeat values in each
+ * permutation.
+ */
+export function* permutations<T, N extends number = number>(
+  iterable: Iterable<T>,
+  r?: N
+): Generator<Tuple<T, N>> {
+  const saved = [...iterable]
+  const n = saved.length
+  if (r === undefined) {
+    r = n as N
+  }
+
+  if (r > n) {
+    return
+  }
+
+  const indicies = [...range(n)]
+  const cycles = [...range(n, n - r, -1)]
+
+  let found = n > 0
+  while (found) {
+    found = false
+    yield indicies.slice(0, r).map((i) => saved[i]) as Tuple<T, N>
+
+    for (const i of range(r - 1, -1, -1)) {
+      cycles[i] -= 1
+      if (cycles[i] == 0) {
+        const temp = indicies[i]
+        for (const j of range(i + 1, indicies.length)) {
+          indicies[j - 1] = indicies[j]
+        }
+        indicies[indicies.length - 1] = temp
+        cycles[i] = n - i
+      } else {
+        const j = cycles[i]
+        const temp = indicies[i]
+        indicies[i] = indicies[indicies.length - j]
+        indicies[indicies.length - j] = temp
+
+        found = true
+        break
+      }
+    }
+  }
+}
+
+/**
  * Iterates over the values 0 <= i < end.
  */
 export function range(end: number): Generator<number>
