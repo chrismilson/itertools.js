@@ -601,15 +601,16 @@ export function* islice<T>(
  * given modifying function.
  *
  * @example
- * [...map([0, 1, 2], n => 'a'.repeat(n))] // ['', 'a', 'aa']
- * [...map('Hello World!', c => c.toUpperCase()].join('') // 'HELLO WORLD!'
+ * [...map(n => 'a'.repeat(n), [0, 1, 2])] // ['', 'a', 'aa']
+ * [...map(c => c.toUpperCase(), 'Hello World!')].join('') // 'HELLO WORLD!'
+ * [...map((a, b) => a * b, [1, 2, 3], [4, 5, 6])] // [4, 10, 18]
  */
-export function* map<T, M>(
-  iterable: Iterable<T>,
-  mapFunction: (value: T) => M
+export function* map<T extends unknown[], M>(
+  mapper: (...values: T) => M,
+  ...iterables: Iterableify<T>
 ): Generator<M> {
-  for (const item of iterable) {
-    yield mapFunction(item)
+  for (const items of zip<T>(...iterables)) {
+    yield mapper(...items)
   }
 }
 
