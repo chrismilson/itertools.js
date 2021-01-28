@@ -15,7 +15,7 @@ export function accumulate(iterable: Iterable<number>): Generator<number>
  * Calls the reducer with an undefined accumulated value on the first value in
  * the iterator to produce the initial value.
  *
- * @see reduce_
+ * @see [[reduce_]]
  *
  * @example
  * ```ts
@@ -31,7 +31,7 @@ export function accumulate<T, R>(
  *
  * Yields the initial value first.
  *
- * @see reduce
+ * @see [[reduce]]
  *
  * @example
  * ```ts
@@ -162,7 +162,7 @@ export function* chain<T>(...toChain: Iterable<T>[]): Generator<T> {
  * Alternate to chain. Gets chained inputs from a single iterable argument that
  * is evaluated lazily.
  *
- * @see chain
+ * @see [[chain]]
  */
 export function* chainFromIterable<T>(
   toChain: Iterable<Iterable<T>>
@@ -228,7 +228,7 @@ export function* combinations<T, N extends number>(
  * So if the input elements are unique, the generated combinations will also be
  * unique.
  *
- * @see combinations
+ * @see [[combinations]]
  *
  * @example
  * ```ts
@@ -812,7 +812,7 @@ export function reduce<T, R>(
  * Same as reduce, but uses the first value from the iterable as the initial
  * value.
  *
- * @see reduce
+ * @see [[reduce]]
  *
  * @example
  * ```ts
@@ -875,7 +875,7 @@ export function* takeWhile<T>(
  * Iterates over multiple iterators in parallel. Stops as soon as any of the
  * included iterators stop.
  *
- * @see zipLongest
+ * @see [[zipLongest]]
  *
  * @example
  * ```ts
@@ -900,7 +900,7 @@ export function* zip<T extends unknown[]>(
  * Iterates over multiple iterators in parallel. Stops when all included
  * iterators stop. Yields `undefined` for iterators that stop early.
  *
- * @see zip
+ * @see [[zip]]
  *
  * @example
  * ```ts
