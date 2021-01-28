@@ -1,9 +1,9 @@
-[![npm](https://img.shields.io/npm/v/itertools.svg)](https://www.npmjs.com/package/itertools)
-[![Build Status](https://github.com/nvie/itertools.js/workflows/test/badge.svg)](https://github.com/nvie/itertools.js/actions)
-[![Coverage Status](https://img.shields.io/coveralls/nvie/itertools.js/master.svg)](https://coveralls.io/github/nvie/itertools.js?branch=master)
-[![Minified Size](https://badgen.net/bundlephobia/minzip/itertools)](https://bundlephobia.com/result?p=itertools)
+[![npm](https://img.shields.io/npm/v/itertools.svg)](https://www.npmjs.com/package/@shlappas/itertools)
+[![Build Status](https://github.com/nvie/itertools.js/workflows/test/badge.svg)](https://github.com/chrismilson/itertools.js/actions)
+[![Coverage Status](https://img.shields.io/coveralls/nvie/itertools.js/master.svg)](https://coveralls.io/github/chrismilson/itertools.js?branch=master)
+[![Minified Size](https://badgen.net/bundlephobia/minzip/itertools)](https://bundlephobia.com/result?p=@shlappas/itertools)
 
-# `itertools`
+# `itertools.js`
 
 The python language (both python core and the `itertools` module) have great
 support for daling with iterators and iterables. Sometimes the same
