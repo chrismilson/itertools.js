@@ -5,11 +5,10 @@
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/nvie/itertools.js.git"
+    "url": "git+https://github.com/chrismilson/itertools.js.git"
   },
-  "homepage": "https://github.com/nvie/itertools.js#readme",
   "bugs": {
-    "url": "https://github.com/nvie/itertools.js/issues"
+    "url": "https://github.com/chrismilson/itertools.js/issues"
   },
   "main": "dist/index.cjs.js",
   "module": "dist/index.esm.js",
