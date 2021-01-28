@@ -4,7 +4,9 @@ import { Iterableify, Tuple, tailIterable } from './common'
  * An iterator over the prefix sums of the number iterable.
  *
  * @example
+ * ```ts
  * accumulate([1, 2, 3, 4]) // 1 3 6 10
+ * ```
  */
 export function accumulate(iterable: Iterable<number>): Generator<number>
 /**
@@ -16,7 +18,9 @@ export function accumulate(iterable: Iterable<number>): Generator<number>
  * @see reduce_
  *
  * @example
+ * ```ts
  * accumulate(['bing', 'bang', 'bong'], (n, s) => (n ?? 0) + s.length) // 4, 8, 12
+ * ```
  */
 export function accumulate<T, R>(
   iterable: Iterable<T>,
@@ -30,7 +34,9 @@ export function accumulate<T, R>(
  * @see reduce
  *
  * @example
+ * ```ts
  * accumulate(['bing', 'bang', 'bong'], (n, s) => n + s.length, 0) // 0, 4, 8, 12
+ * ```
  */
 export function accumulate<T, R>(
   iterable: Iterable<T>,
@@ -91,14 +97,15 @@ export function* accumulate<T, R>(
  * iterator.
  *
  * @example
- *     all([])                           // true
- *     all([0])                          // false
- *     all([0, 1, 2])                    // false
- *     all([1, 2, 3])                    // true
+ * ```ts
+ * all([])                           // true
+ * all([0])                          // false
+ * all([0, 1, 2])                    // false
+ * all([1, 2, 3])                    // true
  *
- *     all([2, 4, 6], n => n % 2 === 0)  // true
- *     all([2, 4, 5], n => n % 2 === 0)  // false
- *
+ * all([2, 4, 6], n => n % 2 === 0)  // true
+ * all([2, 4, 5], n => n % 2 === 0)  // false
+ * ```
  */
 export function all<T>(
   iterable: Iterable<T>,
@@ -118,14 +125,15 @@ export function all<T>(
  * iterator.
  *
  * @example
- *     all([])                           // false
- *     all([0])                          // false
- *     all([0, 1, 2])                    // true
- *     all([1, 2, 3])                    // true
+ * ```ts
+ * any([])                           // false
+ * any([0])                          // false
+ * any([0, 1, 2])                    // true
+ * any([1, 2, 3])                    // true
  *
- *     all([2, 4, 6], n => n % 2 === 0)  // true
- *     all([2, 4, 5], n => n % 2 === 0)  // true
- *
+ * any([2, 4, 6], n => n % 2 === 0)  // true
+ * any([2, 4, 5], n => n % 2 === 0)  // true
+ * ```
  */
 export function any<T>(
   iterable: Iterable<T>,
@@ -138,7 +146,9 @@ export function any<T>(
  * An iterator over multiple iterators in order.
  *
  * @example
+ * ```ts
  * [...chain("Help", [1, 2, 3])].join('') // "Help123"
+ * ```
  */
 export function* chain<T>(...toChain: Iterable<T>[]): Generator<T> {
   for (const iterable of toChain) {
@@ -221,7 +231,9 @@ export function* combinations<T, N extends number>(
  * @see combinations
  *
  * @example
+ * ```ts
  * combinationsWithReplacement('ABC', 2) // AA AB BB AC BC CC
+ * ```
  */
 export function* combinationsWithReplacement<T, N extends number>(
   iterable: Iterable<T>,
@@ -260,11 +272,12 @@ export function* combinationsWithReplacement<T, N extends number>(
  * target object.
  *
  * @example
- *
- *contains([], 'whatever') // => false
- *contains([3], 42) // => false
- *contains([3], 3) // => true
- *contains([{}, {}], {}) // => false, since comparison is done with ===
+ * ```ts
+ * contains([], 'whatever') // => false
+ * contains([3], 42) // => false
+ * contains([3], 3) // => true
+ * contains([{}, {}], {}) // => false, since comparison is done with ===
+ * ```
  */
 export function contains<T>(haystack: Iterable<T>, needle: T): boolean {
   return any(haystack, (value) => value === needle)
@@ -278,6 +291,7 @@ export function contains<T>(haystack: Iterable<T>, needle: T): boolean {
  * Defaults to `start = 0` and `step = 1`.
  *
  * @example
+ * ```ts
  * // good
  * const it = count(5, 2)
  * it.next() // 5
@@ -286,6 +300,7 @@ export function contains<T>(haystack: Iterable<T>, needle: T): boolean {
  *
  * //bad
  * [...count(5, 3)] // Infinite loop!
+ * ```
  */
 export function* count(start = 0, step = 1): Generator<number> {
   for (let i = start; ; i += step) {
@@ -299,11 +314,13 @@ export function* count(start = 0, step = 1): Generator<number> {
  * Repeats indefinitely.
  *
  * @example
+ * ```ts
  * const it = cycle([1, 2, 3])
  * it.next() // 1
  * it.next() // 2
  * it.next() // 3
  * it.next() // 1
+ * ```
  */
 export function* cycle<T>(iterable: Iterable<T>): Generator<T> {
   const saved = []
@@ -351,8 +368,10 @@ export function* dropWhile<T>(
  * element itself.
  *
  * @example
+ * ```ts
  * [...enumerate(['hello', 'world'])] // [[0, 'hello'], [1, 'world']]
  * [...enumerate([5,4,3,2,1].splice(2), 1)] // [[1, 3], [2, 2], [3, 1]]
+ * ```
  */
 export function* enumerate<T>(
   iterable: Iterable<T>,
@@ -369,8 +388,10 @@ export function* enumerate<T>(
  * filtered.
  *
  * @example
+ * ```ts
  * [...filter([0, 1, 2, 3, 4], n => n % 2 === 0)] // [0, 2, 4]
  * [...filter('Hello World!', c => c.match(/[A-Z]/) !== null)] // ['H', 'W']
+ * ```
  */
 export function* filter<T>(
   iterable: Iterable<T>,
@@ -396,13 +417,18 @@ export function* filter<T>(
  * attention to the second example.
  *
  * @example
+ * ```ts
  * const values = [0, 0, 1, 1]
  * for (const [k, g] of groupBy(values)) {
  *    console.log(`key = ${k}`)        // 0      1
  *    console.log(`group = ${[...g]}`) // [0, 0] [1, 1]
  * }
  *
- * const groups = [...groupBy(values)].map(([k, g]) => [...g]) // [[], []]
+ * [...groupBy(values)].map(([k, g]) => [...g]) // [[], []]
+ *
+ * // We could use the iterator version of map though.
+ * [...map(([k, g]) => [...g], groupBy(values))] // [[0, 0], [1, 1]]
+ * ```
  */
 export function groupBy<T>(iterable: Iterable<T>): Generator<[T, Iterable<T>]>
 /**
@@ -419,14 +445,25 @@ export function groupBy<T>(iterable: Iterable<T>): Generator<[T, Iterable<T>]>
  * attention to the second example.
  *
  * @example
+ * ```ts
  * const values = [0, 1, 2, 3, 1, 4, 5]
  * const keyFunc = v => Math.floor(v / 2)
+ *
  * for (const [k, g] of groupBy(values, keyFunc)) {
- *    console.log(`key = ${k}`)        // 0      1      0   2
- *    console.log(`group = ${[...g]}`) // [0, 1] [2, 3] [1] [4, 5]
+ *    console.log(`key = ${k}`)
+ *    // 0 1 0 2
+ *    console.log(`group = ${[...g]}`)
+ *    // [0, 1] [2, 3] [1] [4, 5]
  * }
  *
- * const groups = [...groupBy(values, keyFunc)].map(([k, g]) => [...g]) // [[], [], [], []]
+ * // The group iterators have all finished by the time we call `Array.prototype.map()`
+ * [...groupBy(values, keyFunc)].map(([k, g]) => [...g])
+ * // [[], [], [], []]
+ *
+ * // We could use the iterator version of map though.
+ * [...map(([k, g]) => [...g], groupBy(values, keyFunc))]
+ * // [[0, 1], [2, 3], [1], [4, 5]]
+ * ```
  *
  * @param keyFunc A function computing a key value for each element.
  */
@@ -569,9 +606,11 @@ export function* islice<T>(
  * given modifying function.
  *
  * @example
+ * ```ts
  * [...map(n => 'a'.repeat(n), [0, 1, 2])] // ['', 'a', 'aa']
  * [...map(c => c.toUpperCase(), 'Hello World!')].join('') // 'HELLO WORLD!'
  * [...map((a, b) => a * b, [1, 2, 3], [4, 5, 6])] // [4, 10, 18]
+ * ```
  */
 export function* map<T extends unknown[], M>(
   mapper: (...values: T) => M,
@@ -693,9 +732,11 @@ export function range(end: number): Generator<number>
  * the value constraint.
  *
  * @example
+ * ```ts
  * [...range(0, 3)] // [0, 1, 2]
  * [...range(1, 4)] // [1, 2, 3]
  * [...range(4, 0, -1)] // [4, 3, 2, 1]
+ * ```
  */
 export function range(
   start: number,
@@ -749,7 +790,9 @@ export function* range(
  * unnecessary copying of strings.
  *
  * @example
+ * ```ts
  * reduce(['bing', 'bang', 'bong'], (n, s) => n + s.length, 0) // 12
+ * ```
  */
 export function reduce<T, R>(
   iterable: Iterable<T>,
@@ -772,7 +815,9 @@ export function reduce<T, R>(
  * @see reduce
  *
  * @example
+ * ```ts
  * reduce_([1,2,3], (a, b) => a + b) // 6
+ * ```
  */
 export function reduce_<T>(
   iterable: Iterable<T>,
@@ -794,9 +839,11 @@ export function reduce_<T>(
  * Also used with zip() to create an invariant part of a tuple record.
  *
  * @example
+ * ```ts
  * repeat(5, 3) // 5 5 5
  * map(Math.pow, [1, 2, 3, 4, 5], repeat(2)) // 1 4 9 16 25
  * zip(repeat(1), [1, 2, 3]) // [1, 1] [1, 2] [1, 3]
+ * ```
  *
  * @param value The value to yield
  * @param times The number of times to yield the value. Defaults to Infinity.
@@ -831,7 +878,9 @@ export function* takeWhile<T>(
  * @see zipLongest
  *
  * @example
+ * ```ts
  * [...zip('Hello', [3, 2, 1])] // [['H', 3], ['e', 2], ['l', 1]]
+ * ```
  */
 export function* zip<T extends unknown[]>(
   ...toZip: Iterableify<T>
@@ -854,7 +903,9 @@ export function* zip<T extends unknown[]>(
  * @see zip
  *
  * @example
+ * ```ts
  * [...zipLongest('Hat', [3])] // [['H', 3], ['a', undefined], ['t', undefined]]
+ * ```
  */
 export function* zipLongest<T extends unknown[]>(
   ...toZip: Iterableify<T>
