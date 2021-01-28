@@ -4,7 +4,7 @@
 # `itertools.js`
 
 The python language (both python core and the `itertools` module) have great
-support for daling with iterators and iterables. Sometimes the same
+support for dealing with iterators and iterables. Sometimes the same
 functionality would be nice to have in javascript and typescript.
 
 This package implements some of the useful iterator-related functions in
