@@ -1,5 +1,5 @@
 [![npm version](https://badge.fury.io/js/%40shlappas%2Fitertools.svg)](https://badge.fury.io/js/%40shlappas%2Fitertools)
-[![Build Status](https://github.com/chrismilson/itertools.js/workflows/test/badge.svg)](https://github.com/chrismilson/itertools.js/actions)
+[![Build Status](https://github.com/chrismilson/itertools.js/workflows/Test/badge.svg)](https://github.com/chrismilson/itertools.js/actions)
 
 # `itertools.js`
 
