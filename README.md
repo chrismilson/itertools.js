@@ -21,3 +21,31 @@ yarn add @shlappas/itertools
 
 Check out [the docs](http://shlappas.com/itertools.js/modules.html)! *Created
 with [typedoc](https://github.com/TypeStrong/typedoc)*
+
+## Examples
+
+### Strongly typed `zip`
+
+```ts
+import { zip, repeat } from "@shlappas/itertools"
+
+for (const [c, n] of zip("Hello", repeat(2))) {
+  // c is type string
+  // n is type number
+  console.log(c.repeat(n)) // No compilation errors!
+}
+```
+
+### Strong Tuple types
+
+```ts
+import { combinations, range } from '.'
+
+for (const combo of combinations(range(5), 100)) {
+  console.log(Math.pow(...combo)) // Error: "Expected 2 arguments, but got 100."
+}
+
+for (const combo of combinations(range(5), 2)) {
+  console.log(Math.pow(...combo)) // no error
+}
+```
