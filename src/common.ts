@@ -58,14 +58,3 @@ export type Tuple<T, N extends number> = number extends N
     }[N]
 
 export type Iterableify<T> = { [P in keyof T]: Iterable<T[P]> }
-
-/**
- * When given an iterator (possibly finished), provides a generator to iterate
- * over the remaining values of the iterator.
- */
-export function* tailIterable<T>(iterator: Iterator<T>): Generator<T> {
-  let value: T | undefined
-  while (!({ value } = iterator.next()).done) {
-    yield value as T
-  }
-}

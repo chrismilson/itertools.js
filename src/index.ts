@@ -1,4 +1,15 @@
-import { Iterableify, Tuple, tailIterable } from './common'
+import { Iterableify, Tuple } from './common'
+
+/**
+ * When given an iterator (possibly finished), provides a generator to iterate
+ * over the remaining values of the iterator.
+ */
+function* _tailIterable<T>(iterator: Iterator<T>): Generator<T> {
+  let value: T | undefined
+  while (!({ value } = iterator.next()).done) {
+    yield value as T
+  }
+}
 
 /**
  * An iterator over the prefix sums of the number iterable.
@@ -82,7 +93,7 @@ export function* accumulate<T, R>(
   }
 
   yield accumulated
-  for (const item of tailIterable(iterator)) {
+  for (const item of _tailIterable(iterator)) {
     // The only overload signature with an undefined reducer also has the
     // initial value undefined. In this case, we defined the reducer above.
     // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
@@ -359,7 +370,7 @@ export function* dropWhile<T>(
     }
   }
 
-  yield* tailIterable(iterator)
+  yield* _tailIterable(iterator)
 }
 
 /**
@@ -828,7 +839,7 @@ export function reduce_<T>(
   if (done) {
     return undefined
   }
-  return reduce(tailIterable(iterator), reducer, initialValue)
+  return reduce(_tailIterable(iterator), reducer, initialValue)
 }
 
 /**
