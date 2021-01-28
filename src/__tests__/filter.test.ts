@@ -1,4 +1,4 @@
-import { filter, filterFalse } from '..'
+import { filter } from '..'
 
 describe('filter', () => {
   it('Should not yield values that do not match the predicate', () => {
@@ -11,19 +11,5 @@ describe('filter', () => {
     const values = 'happy'
 
     expect([...filter(values, () => true)].join('')).toBe(values)
-  })
-})
-
-describe('filterFalse', () => {
-  it('Should yield values that do not match the predicate', () => {
-    const values = 'happy'
-
-    expect([...filterFalse(values, () => false)].join('')).toBe(values)
-  })
-
-  it('Should not yield values that match the predicate', () => {
-    const values = 'happy'
-
-    expect([...filterFalse(values, () => true)].length).toBe(0)
   })
 })
