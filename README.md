@@ -1,7 +1,5 @@
-[![npm](https://img.shields.io/npm/v/itertools.svg)](https://www.npmjs.com/package/@shlappas/itertools)
-[![Build Status](https://github.com/nvie/itertools.js/workflows/test/badge.svg)](https://github.com/chrismilson/itertools.js/actions)
-[![Coverage Status](https://img.shields.io/coveralls/nvie/itertools.js/master.svg)](https://coveralls.io/github/chrismilson/itertools.js?branch=master)
-[![Minified Size](https://badgen.net/bundlephobia/minzip/itertools)](https://bundlephobia.com/result?p=@shlappas/itertools)
+[![npm version](https://badge.fury.io/js/%40shlappas%2Fitertools.svg)](https://badge.fury.io/js/%40shlappas%2Fitertools)
+[![Build Status](https://github.com/chrismilson/itertools.js/workflows/test/badge.svg)](https://github.com/chrismilson/itertools.js/actions)
 
 # `itertools.js`
 
