@@ -21,4 +21,5 @@ yarn add @shlappas/itertools
 
 ## API
 
-Check out [the docs](https://shlappas.com/itertools.js)!
+Check out [the docs](http://shlappas.com/itertools.js/modules.html)! *Created
+with [typedoc](https://github.com/TypeStrong/typedoc)*
