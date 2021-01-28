@@ -256,25 +256,6 @@ export function* combinationsWithReplacement<T, N extends number>(
 }
 
 /**
- * An iterator that filters elements from data returning only those that have a
- * corresponding element in selectors that is truthy. Stops when either the data
- * or selectors iterables has been exhausted.
- *
- * @example
- * compress('ABCDEF', [1,0,1,0,1,1]) // A C E F
- */
-export function* compress<T, S>(
-  data: Iterable<T>,
-  selectors: Iterable<S>
-): Generator<T> {
-  for (const [d, s] of zip(data, selectors)) {
-    if (s) {
-      yield d
-    }
-  }
-}
-
-/**
  * Returns true when any of the items in the iterable are equal (===) to the
  * target object.
  *
