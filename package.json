@@ -1,6 +1,6 @@
 {
   "name": "itertools.js",
-  "version": "1.6.1",
+  "version": "2.0.0",
   "description": "Some great tools for iteration inspired by python.",
   "license": "MIT",
   "repository": {
