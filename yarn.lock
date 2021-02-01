@@ -4083,10 +4083,10 @@ tunnel-agent@^0.6.0:
   dependencies:
     safe-buffer "^5.0.1"
 
-tuple-type@^1.0.2:
-  version "1.0.2"
-  resolved "https://registry.yarnpkg.com/tuple-type/-/tuple-type-1.0.2.tgz#48ef544c3b9e1d71a6f09f0cb64670a393aa8494"
-  integrity sha512-P5O9JKJ/BFXVwgPQQsHSzYXO37tDJnTlkU2fl2764606QfwkTaF5mP8Mk59M1V/YsrtDNCGmTnk3BxjGhczqxw==
+tuple-type@^1.0.3:
+  version "1.0.3"
+  resolved "https://registry.yarnpkg.com/tuple-type/-/tuple-type-1.0.3.tgz#b05cce7b70cc419ab255e0e29b4fa7a82e08efa4"
+  integrity sha512-cOGZD1ZmzEQo096tSVMWCXSUpzHfgoRuP1iRnkDoKw5qe+RuTKJVwXctpreDnzEHx+uZk3rb6uLg5MJi85Vqpw==
 
 tweetnacl@^0.14.3, tweetnacl@~0.14.0:
   version "0.14.5"
