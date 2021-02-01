@@ -1,4 +1,6 @@
-import { Iterableify, Tuple } from './common'
+import { Tuple } from 'tuple-type'
+
+type Iterableify<T> = { [P in keyof T]: Iterable<T[P]> }
 
 /**
  * When given an iterator (possibly finished), provides a generator to iterate
